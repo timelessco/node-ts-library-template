@@ -1,6 +1,6 @@
 {
   "name": "node-ts-library-template",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Template for production ready node ts library",
   "repository": {
