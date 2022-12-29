@@ -1,8 +1,9 @@
 # Introduction
 
-This project is a frontend library package built using tsup. tsup is a modern
-build tool for modern node applications, designed for performance and ease of
-use. It allows you to focus on writing code and not on the build process.
+This project is a node library package written in typescript built using tsup.
+tsup is a modern build tool for modern node applications, designed for
+performance and ease of use. It allows you to focus on writing code and not on
+the build process.
 
 ## Setup
 
@@ -26,8 +27,9 @@ pnpm install
 pnpm run dev
 ```
 
-This will start a nodemon watch server, and you can view the changes in your
-cli. Any changes you make to the code will be automatically reloaded in the cli.
+This will start a nodemon watch server with ts-node, and you can view the
+changes in your cli. Any changes you make to the code will be automatically
+reloaded in the cli.
 
 ## Build
 
