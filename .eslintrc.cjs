@@ -1,45 +1,87 @@
-/** @type {import('eslint').Linter.Config} */
-const config = {
-  env: {
-    es6: true,
-    node: true,
-  },
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: "./tsconfig.json",
-  },
-  extends: [
-    "airbnb-base",
-    "airbnb-typescript/base",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended",
-  ],
-  plugins: ["import", "@typescript-eslint"],
+const { createConfig } = require("eslint-config-galex/dist/createConfig");
+const { getDependencies } = require("eslint-config-galex/dist/getDependencies");
+const {
+  createTypeScriptOverride,
+} = require("eslint-config-galex/dist/overrides/typescript");
+
+const dependencies = getDependencies({
+  cwd: __dirname,
+});
+
+const typescriptOverrideConfig = {
   rules: {
-    "no-console": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      { devDependencies: ["**/*.config.js", "**/*.config.ts"] },
-    ],
-    "import/prefer-default-export": "off",
-    "no-unused-vars": [
-      "error",
+    /**
+     * off exported functions are strongly typed
+     *
+     * @see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md
+     */
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+
+    /**
+     * enable type parameters without inference sites and type parameters that don't add type safety to declarations.
+     *
+     * @see https://github.com/cartant/eslint-plugin-etc/blob/main/docs/rules/no-misused-generics.md
+     */
+    "etc/no-misused-generics": "off",
+
+    /**
+     * adds support for TS features, e.g. types
+     *
+     * @see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
+     */
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
       { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
     ],
-    // Use function hoisting to improve code readability
-    "no-use-before-define": [
-      "error",
-      { functions: false, classes: true, variables: true },
-    ],
-    // Allow most functions to rely on type inference. If the function is exported, then `@typescript-eslint/explicit-module-boundary-types` will ensure it's typed.
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error",
-      { functions: false, classes: true, variables: true, typedefs: true },
-    ],
   },
+  ...dependencies,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-module.exports = config;
+const typescriptOverride = createTypeScriptOverride(typescriptOverrideConfig);
+
+module.exports = createConfig({
+  overrides: [typescriptOverride],
+  rules: {
+    // eslint-core rules
+    /**
+     * prevents forgotten debug statements. either uncomment the line
+     * or remove the statement
+     *
+     * @see https://eslint.org/docs/rules/no-console
+     */
+    "no-console": ["warn", { allow: ["warn", "error"] }],
+
+    /**
+     * off unsafe null comparison check
+     *
+     * @see https://eslint.org/docs/rules/no-eq-null
+     */
+    "no-eq-null": "off",
+
+    /**
+     * off unsafe comparison check
+     *
+     * @see https://eslint.org/docs/rules/eqeqeq
+     */
+    eqeqeq: "off",
+
+    // import rules
+    /**
+     * off this rule for Prettier ordering
+     * - groups imports
+     * - alphabetically sorts them
+     * - enforces new lines between groups
+     *
+     * @see https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/order.md
+     */
+    "import/order": "off",
+
+    /**
+     * any module should exclusively contain named exports
+     * when unavoidable due to limitations, disable the warning for this line
+     *
+     * @see https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-default-export.md
+     */
+    "import/no-default-export": "off",
+  },
+});
