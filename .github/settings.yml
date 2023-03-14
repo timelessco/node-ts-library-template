@@ -58,7 +58,6 @@ repository:
   archived: false
 
 # https://docs.github.com/en/rest/reference/issues#create-a-label
-# https://docs.github.com/en/rest/reference/issues#update-a-label
 
 labels:
   - name: "autoapprove ✅"

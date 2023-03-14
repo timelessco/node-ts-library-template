@@ -26,7 +26,6 @@
   "lockFileMaintenance": {
     "enabled": false
   },
-  "ignoreDeps": ["framer-motion"],
   "packageRules": [
     {
       "matchDatasources": ["npm"],

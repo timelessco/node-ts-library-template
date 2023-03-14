@@ -76,4 +76,3 @@ release-it/conventionalChangelogWriterOptsTransform.cjs
 # local files
 CHANGELOG.md
 lib
-stats.html
