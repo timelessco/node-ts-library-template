@@ -50,11 +50,11 @@
     "test": "echo \"no test specified\" && exit 0"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.5.0",
+    "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "@ianvs/prettier-plugin-sort-imports": "3.7.2",
     "@release-it/conventional-changelog": "5.1.1",
-    "@types/node": "18.15.7",
+    "@types/node": "18.15.11",
     "eslint": "8.36.0",
     "eslint-config-galex": "4.4.2",
     "gacp": "3.0.3",
@@ -68,7 +68,7 @@
     "release-it": "15.9.3",
     "ts-node": "10.9.1",
     "tsup": "6.7.0",
-    "typescript": "5.0.2"
+    "typescript": "5.0.3"
   },
   "sideEffects": false,
   "browserslist": {
